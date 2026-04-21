@@ -13,3 +13,10 @@ dist
 # project specific
 .docs
 reports/
+
+# build artifacts
+*.egg-info/
+
+# local config
+.claude/
+.python-version

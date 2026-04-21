@@ -49,7 +49,17 @@ export const ResearchPortal: React.FC = () => {
       new URL('../workers/inflator.worker.ts', import.meta.url),
       { type: 'module' }
     );
-    workerRef.current.postMessage({ type: 'INIT_DICTIONARY' });
+
+    // Fetch available models and init dictionary with the first one
+    fetch(`${API_BASE}/api/research/models`)
+      .then((r) => r.json())
+      .then((data) => {
+        const models = data.models || [];
+        if (models.length > 0 && workerRef.current) {
+          workerRef.current.postMessage({ type: 'INIT_DICTIONARY', model: models[0] });
+        }
+      })
+      .catch(console.error);
 
     return () => {
       workerRef.current?.terminate();

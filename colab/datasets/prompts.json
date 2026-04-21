@@ -1,0 +1,122 @@
+[
+  {
+    "id": "code_001",
+    "category": "Code Generation",
+    "difficulty": "easy",
+    "prompt": "Write a Python function to reverse a string."
+  },
+  {
+    "id": "code_002",
+    "category": "Code Generation",
+    "difficulty": "medium",
+    "prompt": "Write a Python function that implements a binary search algorithm on a sorted list of integers."
+  },
+  {
+    "id": "code_003",
+    "category": "Code Generation",
+    "difficulty": "easy",
+    "prompt": "Write a JavaScript function that removes duplicate values from an array."
+  },
+  {
+    "id": "code_004",
+    "category": "Code Generation",
+    "difficulty": "medium",
+    "prompt": "Write a JavaScript async function that fetches data from an API endpoint and handles errors with retry logic up to 3 attempts."
+  },
+  {
+    "id": "explain_001",
+    "category": "Explanation",
+    "difficulty": "medium",
+    "prompt": "Explain how garbage collection works in modern programming languages, comparing reference counting and mark-and-sweep approaches."
+  },
+  {
+    "id": "explain_002",
+    "category": "Explanation",
+    "difficulty": "hard",
+    "prompt": "Explain the CAP theorem in distributed systems and provide examples of how different databases make trade-offs between consistency, availability, and partition tolerance."
+  },
+  {
+    "id": "explain_003",
+    "category": "Explanation",
+    "difficulty": "easy",
+    "prompt": "Explain the difference between HTTP and HTTPS, including how SSL/TLS encryption works at a high level."
+  },
+  {
+    "id": "creative_001",
+    "category": "Creative Writing",
+    "difficulty": "medium",
+    "prompt": "Write a short story (200-300 words) about a programmer who discovers their code has become sentient."
+  },
+  {
+    "id": "creative_002",
+    "category": "Creative Writing",
+    "difficulty": "easy",
+    "prompt": "Write a haiku about debugging software at 3 AM."
+  },
+  {
+    "id": "reasoning_001",
+    "category": "Reasoning",
+    "difficulty": "medium",
+    "prompt": "A farmer has 17 sheep. All but 9 run away. How many sheep does the farmer have left? Explain your reasoning step by step."
+  },
+  {
+    "id": "reasoning_002",
+    "category": "Reasoning",
+    "difficulty": "hard",
+    "prompt": "Three boxes are labeled 'Apples', 'Oranges', and 'Mixed'. Each label is incorrect. You can pick one fruit from one box to determine the correct labels for all boxes. Which box should you pick from and why?"
+  },
+  {
+    "id": "factual_001",
+    "category": "Factual",
+    "difficulty": "easy",
+    "prompt": "What is the time complexity of quicksort in the average case and worst case? What causes the worst case scenario?"
+  },
+  {
+    "id": "factual_002",
+    "category": "Factual",
+    "difficulty": "medium",
+    "prompt": "List the SOLID principles in object-oriented programming and provide a one-sentence description of each."
+  },
+  {
+    "id": "short_001",
+    "category": "Short Response",
+    "difficulty": "easy",
+    "prompt": "In one sentence, what is the purpose of a Docker container?"
+  },
+  {
+    "id": "short_002",
+    "category": "Short Response",
+    "difficulty": "easy",
+    "prompt": "Name three popular JavaScript frameworks for building web applications."
+  },
+  {
+    "id": "longform_001",
+    "category": "Long Form",
+    "difficulty": "hard",
+    "prompt": "Write a comprehensive guide on implementing authentication and authorization in a REST API, covering JWT tokens, OAuth 2.0, role-based access control, and security best practices."
+  },
+  {
+    "id": "longform_002",
+    "category": "Long Form",
+    "difficulty": "hard",
+    "prompt": "Write a detailed comparison of microservices architecture versus monolithic architecture, discussing pros and cons, when to use each approach, and migration strategies."
+  },
+  {
+    "id": "instruction_001",
+    "category": "Instruction Following",
+    "difficulty": "medium",
+    "prompt": "List exactly 5 programming languages that are commonly used for data science. Format your response as a numbered list with the language name followed by a colon and one key strength. Do not include any additional text before or after the list."
+  },
+  {
+    "id": "instruction_002",
+    "category": "Instruction Following",
+    "difficulty": "medium",
+    "prompt": "Translate the following Python code to JavaScript. Only output the code without any explanations or markdown formatting: def greet(name): return f'Hello, {name}!'"
+  },
+  {
+    "id": "debug_001",
+    "category": "Code Debug",
+    "difficulty": "medium",
+    "prompt": "Find and fix the bug in this Python code: def fibonacci(n): if n <= 1: return n return fibonacci(n-1) + fibonacci(n-3)"
+  }
+]

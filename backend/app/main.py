@@ -10,8 +10,14 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 from contextlib import asynccontextmanager
+from fastapi import HTTPException
+from pydantic import BaseModel
 from .services.model_manager import ModelManager
 from .services.model_manager import llama_tokenWire_generator, llama_baseline_generator
+
+
+class LoadModelRequest(BaseModel):
+    model_id: str
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -33,9 +39,32 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount Research API
-from .api.research import router as research_router
-app.include_router(research_router)
+
+# ─── Model Management Endpoints ───────────────────────────────────────────────
+
+@app.get("/api/models")
+async def get_models():
+    """Get list of available models."""
+    return {
+        "models": ModelManager.get_available_models(),
+        "current": ModelManager.get_current_model()
+    }
+
+
+@app.post("/api/model/load")
+async def load_model(request: LoadModelRequest):
+    """Load a specific model."""
+    try:
+        ModelManager.load_model(request.model_id)
+        return {"status": "ok", "model": request.model_id}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ─── WebSocket Endpoints ──────────────────────────────────────────────────────
+
 @app.websocket("/ws/stream")
 async def websocket_stream(websocket: WebSocket):
     await websocket.accept()
@@ -91,7 +120,7 @@ async def websocket_baseline_stream(websocket: WebSocket):
         while True:
             prompt = await websocket.receive_text()
             logger.info(f"BASELINE_STREAM received prompt: {prompt}")
-            
+
             async for token_text in llama_baseline_generator(prompt):
                 if not token_text: continue
                 payload = {
@@ -100,7 +129,7 @@ async def websocket_baseline_stream(websocket: WebSocket):
                     "done": False
                 }
                 await websocket.send_json(payload)
-                
+
             await websocket.send_json({"model": settings.LLM_MODEL_NAME, "response": "", "done": True})
     except WebSocketDisconnect:
         logger.info("Baseline client disconnected")

@@ -31,12 +31,18 @@ export const ChatInterface: React.FC = () => {
 
   useEffect(() => {
     // Fetch available models
-    fetch(`${API_BASE}/api/research/models`)
+    fetch(`${API_BASE}/api/models`)
       .then(r => r.json())
       .then(data => {
         const list: string[] = data.models || [];
         setModels(list);
-        if (list.length > 0) setSelectedModel(list[0]);
+        if (list.length > 0) {
+          setSelectedModel(list[0]);
+          // Initialize worker with first model's dictionary
+          if (workerRef.current) {
+            workerRef.current.postMessage({ type: 'INIT_DICTIONARY', model: list[0] });
+          }
+        }
       })
       .catch(console.error);
 
@@ -44,7 +50,7 @@ export const ChatInterface: React.FC = () => {
       new URL('../workers/inflator.worker.ts', import.meta.url),
       { type: 'module' }
     );
-    workerRef.current.postMessage({ type: 'INIT_DICTIONARY' });
+    // Initial dictionary load will happen after models are fetched
 
     workerRef.current.onmessage = (e) => {
       const data = e.data;
@@ -457,11 +463,14 @@ export const ChatInterface: React.FC = () => {
                     onChange={async (e) => {
                       const m = e.target.value;
                       setSelectedModel(m);
-                      await fetch(`${API_BASE}/api/research/model/load`, {
+                      // Load model in backend
+                      await fetch(`${API_BASE}/api/model/load`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ model_id: m }),
                       }).catch(console.error);
+                      // Reload dictionary for new model
+                      workerRef.current?.postMessage({ type: 'RELOAD_DICTIONARY', model: m });
                     }}
                   >
                     {models.map(m => (
